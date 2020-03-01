@@ -4,8 +4,8 @@ directory_name=$1
 file_name=$2
 path_to_file=$3
 
-for line in $path_to_file
+for line in `cat $file_name`
 do
-	cat $line >> $file_name
-	cat $directory_name/`cat $line` >> $file_name
+	echo $line >> $path_to_file
+	cat $directory_name/$line >> $path_to_file
 done
