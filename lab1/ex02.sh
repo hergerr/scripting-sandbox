@@ -7,7 +7,7 @@ files_names=`cat $list_file_name`
 
 for file in $files_names
 do
-	if [ ! -e $file ]
+	if [ ! -e $directory_name/$file ]
 	then
 		touch $directory_name/$file
 	fi
