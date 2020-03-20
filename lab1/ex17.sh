@@ -24,7 +24,7 @@ if [ -e $first_dir -a -d $first_dir -a -w $first_dir -a -e $second_dir -a -d $se
             for sub_file in $file/*
             do
                 file_name=${sub_file##*/}
-                if [ -e $first_dir/$subdir_name/$file_name -a ! -x $first_dir/$subdir_name/$name -a -f $first_dir/$subdir_name/$name ]; then
+                if [ -e $first_dir/$subdir_name/$file_name -a ! -x $first_dir/$subdir_name/$file_name -a -f $first_dir/$subdir_name/$file_name ]; then
                     rm $first_dir/$subdir_name/$file_name
                     echo $first_dir/$subdir_name/$file_name
                 fi
