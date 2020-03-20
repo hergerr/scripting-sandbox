@@ -19,14 +19,19 @@ fi
 if [ -e $first_dir -a -d $first_dir -a -w $first_dir -a -e $second_dir -a -d $second_dir ]; then
     for file in $second_dir/*
     do
-        name=${file##*/} # usuwa ze ścieżki wszystko to co jest przed nazwa pliku
-        echo $name
-        # if [ $file -d ] then;
-            # for sub_files in $file/*
-# 
-        # fi
+        if [ -d $file ]; then
+        subdir_name=${file##*/}
+            for sub_file in $file/*
+            do
+                file_name=${sub_file##*/}
+                if [ -e $first_dir/$subdir_name/$file_name -a ! -x $first_dir/$subdir_name/$name -a -f $first_dir/$subdir_name/$name ]; then
+                    rm $first_dir/$subdir_name/$file_name
+                    echo $first_dir/$subdir_name/$file_name
+                fi
+            done
+        fi
 
-        
+        name=${file##*/} # usuwa ze ścieżki wszystko to co jest przed nazwa pliku
         if [ -e $first_dir/$name -a ! -x $first_dir/$name -a -f $first_dir/$name ]; then
             echo $first_dir/$name
             rm $first_dir/$name
