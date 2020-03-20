@@ -19,10 +19,19 @@ fi
 if [ -e $first_dir -a -d $first_dir -a -w $first_dir -a -e $second_dir -a -d $second_dir ]; then
     for file in $second_dir/*
     do
-        name=${file##*/}
+        name=${file##*/} # usuwa ze ścieżki wszystko to co jest przed nazwa pliku
+        echo $name
+        # if [ $file -d ] then;
+            # for sub_files in $file/*
+# 
+        # fi
+
+        
         if [ -e $first_dir/$name -a ! -x $first_dir/$name -a -f $first_dir/$name ]; then
             echo $first_dir/$name
             rm $first_dir/$name
         fi
     done
+else
+    echo "One of directories does not exist or does not have correct pemissions"
 fi
