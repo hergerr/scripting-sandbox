@@ -1,5 +1,5 @@
 #!/bin/bash
-
+# Tymoteusz Frankiewicz, 241255
 # Usuwanie z zadanego katalogu (pierwszy argument skryptu) wszystkich plików,
 # których nazwy pokrywają się z nazwami w drugim katalogu (drugi argument).
 # Nie usuwaj podkatalogów. Nie usuwaj równie plików o nazwach pokrywających się z nazwami podkatalogów w drugim katalou.
