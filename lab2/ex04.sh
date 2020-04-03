@@ -43,6 +43,10 @@ do
 
     elif [ -d $file ]; then
         ln -s "`pwd`/$file" $dir2
+        for f in $file/*
+        do
+            # ln -s "`pwd`/$f" $dir2
+        done
     fi
 done
 

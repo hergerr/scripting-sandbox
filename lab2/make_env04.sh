@@ -9,5 +9,6 @@ chmod +x file1 file3 file5
 
 ln file3 ../dir42/hardlink_to_3
 
-mkdir subdir1
-mkdir subdir2
+mkdir subdir1 subdir2
+cd subdir1
+touch file6
