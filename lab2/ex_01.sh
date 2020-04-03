@@ -8,22 +8,15 @@
 dir=$1
 linked_file=$2
 
-for file in $dir/*
-do
-
-    if [ -L $file ] ; then
-
-        link=`readlink $file`
-        if [ `basename $link` = $linked_file ] ; then
-            ln -f $link $file
-        fi
-
-        if [ ! -e $file ] ; then
-            rm $file
-        fi
-
+for file in $dir/*; do
+    if [ -L $file -a ! -e $file ]; then
+        rm $file
     fi
-
 done
 
-
+for file in $dir/*; do
+    link=$(readlink $file)
+    if [ -L $file -a $(basename $link) = $linked_file ]; then
+        ln -f $link $file
+    fi
+done
