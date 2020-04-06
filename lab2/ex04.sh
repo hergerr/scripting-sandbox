@@ -1,5 +1,7 @@
 #!/bin/bash
+# Tymoteusz Frankiewicz, 241255
 
+# Zadanie 32
 # Napisz skrypt, który dla wszystkich plików wykonywalnych 
 # z jakiegoś katalogu (parametr wywołania skryptu) zrobi
 # dowiązania twarde w drugim katalogu (parametr wywołania skryptu),
@@ -12,14 +14,15 @@
 # d) w przypadku podkatalogów pierwszego danego katalogu, utwórz odpowiednie
 # dowiązania do plików z tych podkatalogów w drugim danym katalogu (załóż, że nazwy plików są unikalne)
 
-if [ $# -ne 2 ]
-then
+if [ $# -ne 2 ]; then
 	echo "Script should be run with 2 args"
 	exit 1
-elif [ ! -d $1 -o ! -d $2 ]
-then
+elif [ ! -d $1 -o ! -d $2 ]; then
 	echo "Arguments should be directories"
 	exit 1
+elif [ ! -w $2 ]; then
+    echo "You should have write permissions to second directory"
+    exit 1
 fi
 
 dir1=$1
@@ -31,7 +34,7 @@ do
         hardlink_exists=false
         for f in $dir2/*
         do
-            if [ $f -ef $file ]; then
+            if [ $f -ef $file ]; then   # if inode nubers are the same
                 hardlink_exists=true
                 break
             fi
@@ -41,12 +44,14 @@ do
             ln $file $dir2
         fi
 
-    elif [ -d $file ]; then
+    elif [ -d $file ]; then    
         ln -s "`pwd`/$file" $dir2
-        for f in $file/*
-        do
-            # ln -s "`pwd`/$f" $dir2
-        done
+
+        if [ ! -z "$(ls -A $file)" ]; then # dir is not empty (backticks dont work)
+            for f in $file/*
+            do
+                ln -s "`pwd`/$f" $dir2
+            done
+        fi
     fi
 done
-

@@ -16,6 +16,5 @@ do
         if [ $link_target = $path ]; then
             echo $file
         fi
-
     fi
 done
