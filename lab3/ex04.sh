@@ -12,12 +12,35 @@ echo -n "Ex a: "
 find $dir -executable -type f | wc -l
 echo "--------"
 
+
 echo "Ex b: "
-find $dir -executable -type f -exec file -i {} \; | grep -i "asci" | awk '{ print $1 }'
-echo "--------"
-
 # this awk cuts colon (last). first column, starting at first sign, till the end -1
-echo "Ex c: "
-find $dir -executable -type f -exec file -i {} \; | grep -i "asci" | awk '{print substr($1, 0, length($1)-1)}' 
+find $dir -executable -type f -exec file -i {} \; | grep -i "asci" | awk '{ print substr($1, 0, length($1)-1) }'
 echo "--------"
 
+
+echo "Ex c: "
+files=`find $dir -executable -type f -exec file -i {} \; | grep -i "asci" | awk '{ print substr($1, 0, length($1)-1) }'`
+
+for file in $files
+do
+    # getting shebang
+    shebang=`head --lines 1 $file`
+
+    # deleting # and !
+    path=${shebang:2}
+
+    # exists?
+    exists=`which $path`
+    if [ $exists ]; then
+        echo $file
+    fi
+done
+echo "--------"
+
+
+echo "Ex d":
+# those modified in this week
+find $dir -executable -type f -mtime -7 -printf "WARNING: %p modified in last week\n"
+# rest of executable files in directory
+find $dir -executable -type f -mtime +7
