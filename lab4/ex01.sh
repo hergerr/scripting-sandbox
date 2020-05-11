@@ -43,4 +43,20 @@ do
 		FLIPPEDPATH=$(realpath "$name" | tr '/' '\\')
 		echo "$FLIPPEDPATH"   
     fi
-done | sort | tee $2 | tac | tail --lines 7
+done | sort | tac | tail --lines 7
+
+LEVEL=1
+FILESONLEVEL=0
+find "$dir" -type f -printf "%d\n" | sort | ( while read depth
+do
+	if [ "$depth" = "$LEVEL" ]
+	then
+		FILESONLEVEL=$((FILESONLEVEL+1))
+	else
+		echo "${LEVEL} : ${FILESONLEVEL}"
+		LEVEL="$depth"
+		FILESONLEVEL=1
+	fi
+done
+echo "${LEVEL} : ${FILESONLEVEL}" 
+)
