@@ -1,5 +1,5 @@
 #!/bin/bash
-
+# Tymoteusz Frankiewicz, 241255
 # Napisz skrypt, który z zadanego miejsca systemu plików (parametr wywołania skryptu),
 # uwzględniając wszystkie możliwe podkatalogi, wypisze ścieżki do N (opcjonalny 
 # parametr wywołania skryptu; domyślnie 10) największych (pod względem rozmiaru w bajtach) 
