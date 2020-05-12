@@ -8,22 +8,18 @@
 # (zakładamy najprościej, że program1, /jakiś/program1 oraz /jakiś/program1 --jakaś-opcja 
 # to dwa unikalne działające programy: program1 oraz /jakiś/program1)
 
-# a
 echo "Zadanie A:"
-ps --no-header -ewwo user,pcpu,command | sort -rk2 | head
-
-echo
+ps --no-header -ewwo user,pcpu,command | sort -rnk2 | head
 
 
-echo "Zadanie B:"
-# b
+printf "\nZadanie B:\n"
 user=""
 
-# pierwszy user ma na pewno 1 proces
+# user ma na pewno 1 proces
 num_of_user_proc=1
 
 # wyciecie interesujacej kolumny
-ps --no-header -ewwo user,pcpu,command | sort | awk '{ print $1 }' | ( while read output
+ps --no-header -ewwo user,pcpu,command | sort -k1 | awk '{ print $1 }' | ( while read output
 do
     # jesli jest to ten sam user, inkrementuj liczbe procesow
     if [ "$user" = "$output" ]; then
@@ -46,3 +42,33 @@ do
     fi
 done
 echo "${user} : ${num_of_user_proc}" )
+
+# zadanie C
+printf "\nZadanie C\n"
+ps --no-header -ewwo user,pcpu,command | tr -s ' '
+
+
+
+# zadanie D, analogiczne do B
+printf "\nZadanie D\n"
+program=""
+num_of_proc=1
+
+ps --no-header -ewwo user,pcpu,command | sort -k3 | awk '{ print $3 }' | ( while read output
+do
+    if [ "$program" = "$output" ]; then
+        num_of_proc=$((num_of_proc+1))
+
+	elif [ "$program" != "$output" ]; then
+
+        if [ "$program" = "" ]; then
+		    program="$output"
+            continue;
+        fi
+
+		echo "${program} : ${num_of_proc}"
+		program="$output"
+		num_of_proc=1
+    fi
+done
+echo "${program} : ${num_of_user_proc}" ) | sort -nk3
