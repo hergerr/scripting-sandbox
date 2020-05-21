@@ -17,10 +17,10 @@
 # d) wyposażyć skrypt w rozsądną obsługę błędów, takich jak na przykład nieistniejące pliki wejściowe.
 
 # a
-# wget -qO- https://datko.pl/SO2/nowomow.txt | awk '\
-# # separator daty w pliku to . lub /
-# {newdates = gensub(/([0-9]{2})(\.|\/)([0-9]{2})(\.|\/)([0-9]{4})/, "\\3/\\1/\\5", "g")
-# print newdates}'
+wget -qO- https://datko.pl/SO2/nowomow.txt | awk '\
+# separator daty w pliku to . lub /
+{newdates = gensub(/([0-9]{2})(\.|\/)([0-9]{2})(\.|\/)([0-9]{4})/, "\\3/\\1/\\5", "g")
+print newdates}'
 
 # b
 wget -qO-  http://datko.pl/SO2/sensors.txt  | awk '\
@@ -33,7 +33,13 @@ wget -qO-  http://datko.pl/SO2/sensors.txt  | awk '\
         } 
     }
     print;
-
 }'
 
 #c
+# TODO
+# wget -qO- http://datko.pl/SO2/tox.inis | awk '\
+# BEGIN {RS="\n\n"}{print $0}'
+
+# d
+# jesli plik nie istnieje, awk poprostu nie ma nic do przetwarzania
+# nic nie robi, nie ma zadnych bledow
