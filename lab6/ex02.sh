@@ -17,12 +17,23 @@
 # d) wyposażyć skrypt w rozsądną obsługę błędów, takich jak na przykład nieistniejące pliki wejściowe.
 
 # a
-wget -qO- https://datko.pl/SO2/nowomow.txt | awk '\
-# separator daty w pliku to . lub /
-{newdates = gensub(/([0-9]{2})(\.|\/)([0-9]{2})(\.|\/)([0-9]{4})/, "\\3/\\1/\\5", "g")
-print newdates}'
+# wget -qO- https://datko.pl/SO2/nowomow.txt | awk '\
+# # separator daty w pliku to . lub /
+# {newdates = gensub(/([0-9]{2})(\.|\/)([0-9]{2})(\.|\/)([0-9]{4})/, "\\3/\\1/\\5", "g")
+# print newdates}'
 
 # b
-wget -q0- http://datko.pl/SO2/sensors.txt  | awk '\
-newtemps = gensub(/\+[[:digit:]]+/, lolo, "g")
-print newtemps'
+wget -qO-  http://datko.pl/SO2/sensors.txt  | awk '\
+# wykrycie temperatur i obliczenie ich wartosci w F.
+{
+    for(i = 1; i <= NF; i++) {
+        if(match($i, /([[:digit:]]+\.[[:digit:]])(°C)/, tab)){
+            sub(tab[1], tab[1]*1.8+32); 
+            sub(tab[2], "°F"); 
+        } 
+    }
+    print;
+
+}'
+
+#c
