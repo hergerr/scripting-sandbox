@@ -1,1 +1,1 @@
-# Bash scripting playgound
+# Bash scripting playground
